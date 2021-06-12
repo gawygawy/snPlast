@@ -27,6 +27,11 @@ Processed and summarized data can be accessed in `processed_trial_data.rds` usin
 
 ### [sn-Plast model](code/snPlast_model) 
 
-Under `/snPlast_model`:
-* Python implementation of the [sn-Plast model in Brzosko et al., 2017](https://elifesciences.org/articles/27756) adapted to the experimental open-field task found in the `snPlast_model` folder. 
+* `run_model.py`: Python implementation of the [sn-Plast model (Brzosko et al., 2017)](https://elifesciences.org/articles/27756) adapted to the experimental open-field task. To display plots as the experiment is being run do `python run_model.py -p -it 1`. If not plotting, model simulation results are saved to `.csv` files. 
+* `process_model_results.R`: R script to read in and process model simulation results for analysis
 * `param_search.sh`: example bash script to run the model across different parameter settings (e.g. <img src="https://latex.codecogs.com/gif.latex?\eta_{ACh}\text{,}\eta_{DA}" /> )
+
+### [Model fitting and analysis](code/analysis)
+
+* `analyze_experimental.R` : statistical tests of experimental behavioural data 
+* `analyze_simulations.R` : model-fitting to experimental behavioural data
