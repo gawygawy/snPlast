@@ -1,3 +1,5 @@
+# R version 3.6.1 
+
 rm(list = ls())
 
 library(tidyverse)
@@ -22,11 +24,13 @@ days.to.80 <- datalist$hit.80 %>%
 
 plotHit80Sig(days.to.80)
 
+# comparing number of days to reach 80% success rate, during initial learning ...
 learn.dat <- days.to.80 %>% filter(phase == "Learning") %>% droplevels()
 
 learn.m <- art(hit.80 ~ condition, data = learn.dat )
-learn.aov <- anova(learn.m)
+learn.aov <- anova(learn.m) # n.s.
 
+# and during reversal learning 
 reversal.dat <- days.to.80 %>% filter(phase == "Reversal") %>% droplevels()
 
 rev.mod <- art(hit.80 ~ condition, data = reversal.dat )
@@ -55,7 +59,7 @@ trial.dat <- datalist$combined.dat %>%
 trial.dat <- trial.dat %>% 
   mutate(condition = fct_relevel(condition, c("ON", "OFF", "GFP")))
 
-# Fixed effects model - equation 1 in the manuscript 
+# Building the fixed effects model 
 fit1 <- glm(rew.found ~ condition, data=trial.dat, family=binomial(link="logit"))
 fit2 <- glm(rew.found ~ condition + phase, data=trial.dat, family=binomial(link="logit"))
 fit3 <- glm(rew.found ~ condition + phase + trial, data=trial.dat, family=binomial(link="logit"))
@@ -66,9 +70,9 @@ fit4_2 <- glm(rew.found ~ condition + phase + trial +
 fit5 <- glm(rew.found ~ condition + phase + trial +
   condition:phase + phase:trial, data=trial.dat, family=binomial(link="logit"))
 
-summary(fit5) # final model 
+summary(fit5) # final model - equation 1 in the manuscript 
 
-# Mixed effects model - equation 2 in the manuscript
+# Building the mixed effects model. include mouse-specific terms 
 fit1b <- glmer(rew.found ~ condition +
     (0 + trial|sub) + (1|sub), data=trial.dat, family=binomial(link="logit"))
 
@@ -86,9 +90,9 @@ fit5b <- glmer(rew.found ~ condition + phase + trial +
   phase:trial + condition:phase +
     (0 + trial|sub) + (1|sub), data=trial.dat, family=binomial(link="logit"))
 
-anova(fit1b, fit2b, fit3b, fit4b, fit5b)
+anova(fit1b, fit2b, fit3b, fit4b, fit5b) # model comparison 
 
-summary(fit5b) # final model 
+summary(fit5b) # final model - equation 2 in the manuscript 
 
 anova(fit5, fit5b) # random effects model is much better fit to experimental data 
 

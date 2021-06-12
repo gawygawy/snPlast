@@ -1,3 +1,5 @@
+# helper functions for analyze_simulations.R
+
 formatSimDat <- function(sim.dat.raw, switch.tr, tr.day){
   sim.dat <- sim.dat.raw %>%
     mutate(rew.found=ifelse((well == 1 | well == 2), 1, 0),

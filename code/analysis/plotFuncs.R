@@ -1,4 +1,6 @@
-library(lemon) # to be able to use facet_rep_wrap
+# plotting functions to generate figures for the manuscript 
+
+library(lemon)
 library(egg)
 library(ggpubr)
 
@@ -121,68 +123,6 @@ plotParamsPerf <- function(est.params, m.hit.80, y.param, learn.cat, filename){
 
   return(p)
 }
-#
-# plotIndivFits <- function(est.day.performance, exp.dat, m.success.perc, which.con){
-
-#   est.day.performance <- est.day.performance %>% rename(mod.sem = sem)
-
-#   plt.dat <- left_join(est.day.performance, exp.dat %>% unnest(), 
-#     by = c("sub", "condition", "phase", "day")) %>% 
-#     left_join(., m.success.perc %>% unnest(), by = c("sub", "phase", "day")) %>% 
-#     filter(condition == which.con)
-
-#   con.col <- cond.col.scheme[cond.vecs == which.con]
-
-#   ggplot(plt.dat) + 
-#     geom_point(aes(x=trial, y=rew.found), colour=con.col, size=0.4) + 
-#     geom_line(aes(x=day, y=predicted), colour=con.col) + 
-#     geom_point(aes(x=day, y=success.p), colour=con.col, shape=1, size=2.5) + 
-#     geom_ribbon(aes(x=day, y=predicted, ymin=predicted-mod.sem, ymax=predicted+mod.sem), fill = "grey70", alpha=0.5) +
-#     geom_errorbar(aes(x=day, ymin=success.p-sem, ymax=success.p+sem), colour=con.col, width=.1) + 
-#     facet_grid(sub~phase) +
-#     ylim(0, 1) +
-#     ylab("Proportion of successful trials/day") +
-#     xlab("Day") +
-#     scale_y_continuous(breaks=seq(0, 1)) +
-#     scale_x_continuous(labels = scales::number_format(accuracy = 1), breaks=seq(2, 12, 2)) +
-#     facet_rep_grid(sub~phase, scales="free_x", space="free_x") + 
-#     theme_classic() +
-#     theme(legend.position="none", 
-#         panel.spacing.y = unit(0.3, "lines"), 
-#         strip.background = element_rect(color=NA, fill=alpha("grey", 0.5)))
-
-# }
-
-# plotIndivSelect <- function(est.day.performance, exp.dat, m.success.perc, subs){
-
-#   est.day.performance <- est.day.performance %>% rename(mod.sem = sem)
-
-#   plt.dat <- left_join(est.day.performance, exp.dat %>% unnest(), 
-#     by = c("sub", "condition", "phase", "day")) %>% 
-#     left_join(., m.success.perc %>% unnest(), by = c("sub", "phase", "day")) %>% 
-#     filter(sub %in% subs) %>% 
-#     arrange(condition)
-
-#   ggplot(plt.dat, aes(colour=condition)) + 
-#     geom_point(aes(x=trial, y=rew.found), size=0.4) + 
-#     geom_line(aes(x=day, y=predicted)) + 
-#     geom_point(aes(x=day, y=success.p), shape=1, size=2.5) + 
-#     #geom_ribbon(aes(x=day, y=predicted, ymin=predicted-mod.sem, ymax=predicted+mod.sem), fill = "grey70", alpha=0.5) +
-#     geom_errorbar(aes(x=day, ymin=success.p-sem, ymax=success.p+sem), width=.1) + 
-#     facet_grid(sub~phase) +
-#     scale_color_manual(values=cond.col.scheme) + 
-#     ylim(0, 1) +
-#     ylab("Proportion of successful trials/day") +
-#     xlab("Day") +
-#     scale_y_continuous(breaks=seq(0, 1)) +
-#     scale_x_continuous(labels = scales::number_format(accuracy = 1), breaks=seq(2, 12, 2)) +
-#     facet_rep_grid(sub~phase, scales="free_x", space="free_x") + 
-#     theme_classic() +
-#     theme(legend.position="none", 
-#         panel.spacing.y = unit(0.3, "lines"), 
-#         strip.background = element_rect(color=NA, fill=alpha("grey", 0.5)))
-# }
-
 
 plotCV <- function(params0, params1, all, varX, varY){
   params0 %>% rename(ACh0 = ACh, DA0 = DA, ACh.DA0 = ACh.DA)
